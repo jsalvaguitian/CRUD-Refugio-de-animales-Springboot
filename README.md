@@ -33,16 +33,16 @@
     GET /animales
     Lista todos los animales
 
-    GET/animales/nombre/{nombre}
+    GET /animales/nombre/{nombre}
     Busca por nombres que contengan el valor (usar CONTAINING)
 
-    GET/animales/color/{color}
+    GET /animales/color/{color}
     Busca por color exacto
 
-    GET/animales/edad/{edadDesde}/{edadHasta} 			
+    GET /animales/edad/{edadDesde}/{edadHasta} 			
     animales en un rango de edad (usar between en el repo)
 
-    GET /animales/id/{id
+    GET /animales/id/{id}
     Busca un animal por ID
 
     GET /animales/nuevo
