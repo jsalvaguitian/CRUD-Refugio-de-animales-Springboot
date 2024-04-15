@@ -46,7 +46,7 @@
                     <td><span th:text="${animal.getEdad()}"></span></td>
                     <td><span th:text="${animal.getColor()}"></span></td>
                     <td><a href="#" class="icono editar" th:id="${animal.getIdanimal()}"><i class="icon-pencil" title="Editar"></i></a></td>
-                    <td><a href="#" class="icono borrar" th:id="${animal.getIdanimal()}"><i class="icon-trash" title="Borrar"></i></a></td>
+                    <td><a href="#" class="icono borrar" th:id="${animal.getIdanimal()}"><i class="icon-trash" title="Borrar" ></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -64,6 +64,7 @@
             type: 'DELETE',
             complete: function(data){
                 $("#animal"+itemID).parent().slideUp("slow");
+                location.reload();
             }
         });
     });
