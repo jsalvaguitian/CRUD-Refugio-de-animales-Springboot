@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Animales</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h2>Todos los animales</h2>
+    <form class="formBuscar" id="formBuscar" action="/animales/buscar" method="get">
+        <input type="search" placeholder="Buscar por nombre o ID" name="nombreORid">
+        <label for="buscarEdad" class="text-edad">Edad: </label>
+        <input type="range" class="rango-edad" name="edad" id="buscarEdad" value="0" min="0" max="50" step="1">
+        <span id="edadValor"></span>
+        <select class="form-control" name="color">
+            <option value="0" selected>Color</option>
+            <option th:each = "color:${colores}" th:value="${color}" th:text="${color}">
+        </select>
+        <br/><br/>
+        <a href="#" id="buscarBtn" class="boton rosa">Buscar</a>
+        <a href="/animales/nuevo" class="boton rosa">Crear nuevo</a>
+        <a href="/" class="boton rosa">Ver todos</a>
+    </form>
+    <br>
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th>ID animal</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Color</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${animales.isEmpty()}">
+                    <td colspan="6">No se encontraron animales</td>
+                </tr>
+                <tr th:each="animal :${animales}">
+                    <td><span th:text="${animal.getIdanimal()}"></span></td>
+                    <td><span th:text="${animal.getNombre()}"></span></td>
+                    <td><span th:text="${animal.getEdad()}"></span></td>
+                    <td><span th:text="${animal.getColor()}"></span></td>
+                    <td><a href="#" class="icono editar" th:id="${animal.getIdanimal()}"><i class="icon-pencil" title="Editar"></i></a></td>
+                    <td><a href="#" class="icono borrar" th:id="${animal.getIdanimal()}"><i class="icon-trash" title="Borrar"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    $(".editar").click(function(){
+        $(location).attr('href','/animales/editar/'+this.id);
+    });
+
+    $(".borrar").click(function(){
+        var itemID = $(this).attr("id");
+        $.ajax({
+            url: '/animales/borrar/'+itemID,
+            type: 'DELETE',
+            complete: function(data){
+                $("#animal"+itemID).parent().slideUp("slow");
+            }
+        });
+    });
+
+    $("#buscarEdad").on('input',function(){
+        $("#edadValor").text("0 - "+$("#buscarEdad").val());
+    });
+
+    $("#buscarBtn").click(function(){
+        $("#formBuscar").submit();
+    });
+
+</script>
+</html>
